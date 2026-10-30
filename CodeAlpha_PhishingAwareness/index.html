@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Phishing Awareness Training - CodeAlpha</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #131c2e;
+      --line: #243049;
+      --txt: #e8eefc;
+      --mut: #93a1bd;
+      --acc: #4f8cff;
+      --bad: #ff5d6c;
+      --ok: #2ecc8f;
+      --warn: #f5b942
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, Segoe UI, Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--txt);
+      line-height: 1.55
+    }
+
+    header {
+      padding: 48px 20px 36px;
+      text-align: center;
+      background: linear-gradient(135deg, #16254a, #0b1220)
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: clamp(28px, 5vw, 46px)
+    }
+
+    header p {
+      color: var(--mut);
+      max-width: 640px;
+      margin: 12px auto 0
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      background: #0b1220ee;
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      gap: 6px;
+      overflow: auto;
+      padding: 10px;
+      justify-content: center;
+      z-index: 5
+    }
+
+    nav a {
+      color: var(--mut);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      white-space: nowrap
+    }
+
+    nav a:hover {
+      background: var(--card);
+      color: var(--txt)
+    }
+
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 20px
+    }
+
+    section {
+      margin: 40px 0
+    }
+
+    h2 {
+      border-left: 4px solid var(--acc);
+      padding-left: 12px
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px;
+      margin: 14px 0
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 14px
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 12px;
+      padding: 2px 10px;
+      border-radius: 12px;
+      background: #1f2c4a;
+      color: var(--acc);
+      margin-bottom: 6px
+    }
+
+    .email {
+      background: #fff;
+      color: #222;
+      border-radius: 10px;
+      padding: 0;
+      overflow: hidden;
+      font-size: 15px
+    }
+
+    .email .hd {
+      background: #eef1f6;
+      padding: 12px 16px;
+      border-bottom: 1px solid #d5dae3;
+      font-size: 14px
+    }
+
+    .email .bd {
+      padding: 16px
+    }
+
+    .hot {
+      background: #fff3b0;
+      border-bottom: 2px dashed var(--bad);
+      cursor: pointer;
+      padding: 0 2px
+    }
+
+    .hot.found {
+      background: #c8f7dc;
+      border-color: var(--ok)
+    }
+
+    #flagInfo {
+      min-height: 60px
+    }
+
+    button {
+      background: var(--acc);
+      color: #fff;
+      border: 0;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 15px;
+      cursor: pointer
+    }
+
+    button:hover {
+      filter: brightness(1.1)
+    }
+
+    button.ghost {
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--txt)
+    }
+
+    .url {
+      font-family: ui-monospace, Menlo, monospace;
+      background: #0a1020;
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin: 6px 0;
+      word-break: break-all
+    }
+
+    .opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: #0f1729;
+      border: 1px solid var(--line);
+      margin: 8px 0
+    }
+
+    .opt.right {
+      border-color: var(--ok);
+      background: #0f2a22
+    }
+
+    .opt.wrong {
+      border-color: var(--bad);
+      background: #2a1119
+    }
+
+    .bar {
+      height: 8px;
+      background: var(--line);
+      border-radius: 6px;
+      overflow: hidden
+    }
+
+    .bar>i {
+      display: block;
+      height: 100%;
+      background: var(--acc);
+      width: 0;
+      transition: width .3s
+    }
+
+    .check li {
+      margin: 6px 0
+    }
+
+    .mut {
+      color: var(--mut)
+    }
+
+    footer {
+      text-align: center;
+      color: var(--mut);
+      padding: 30px;
+      font-size: 13px
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Don't Take the Bait</h1>
+    <p>Phishing Awareness Training: learn to spot fake emails and websites, understand social engineering, and test
+      yourself. 10 minutes. No jargon.</p>
+  </header>
+  <nav>
+    <a href="#what">What is phishing</a><a href="#types">Types</a><a href="#spot">Spot the email</a><a href="#urls">Fake
+      URLs</a>
+    <a href="#social">Social engineering</a><a href="#cases">Real cases</a><a href="#tips">Best practices</a><a
+      href="#quiz">Quiz</a>
+  </nav>
+  <main>
+
+    <section id="what">
+      <h2>1. What is phishing?</h2>
+      <div class="card">Phishing is a cyber attack where criminals pretend to be someone you trust (bank, boss, delivery
+        company, government) to trick you into <b>clicking a link, opening a file, or giving away passwords, OTPs or
+          money</b>.
+        Over 90% of successful breaches start with a human action, not a technical hack. That is why awareness is the
+        strongest defence.</div>
+      <div class="grid">
+        <div class="card"><b>The goal</b><br><span class="mut">Steal credentials, install malware, commit payment fraud,
+            or get a foothold in a company.</span></div>
+        <div class="card"><b>The method</b><br><span class="mut">Create urgency, fear or greed so you act before you
+            think.</span></div>
+        <div class="card"><b>The defence</b><br><span class="mut">Pause. Verify through another channel. Report.</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="types">
+      <h2>2. Types of phishing</h2>
+      <div class="grid">
+        <div class="card"><span class="tag">Email</span><br><b>Mass phishing</b><br><span class="mut">Generic emails
+            sent to thousands: "Your account is suspended."</span></div>
+        <div class="card"><span class="tag">Targeted</span><br><b>Spear phishing</b><br><span class="mut">Personalised
+            using your name, job and colleagues found on LinkedIn.</span></div>
+        <div class="card"><span class="tag">Executive</span><br><b>Whaling / BEC</b><br><span class="mut">Fake CEO or
+            vendor asks finance to transfer money urgently.</span></div>
+        <div class="card"><span class="tag">SMS</span><br><b>Smishing</b><br><span class="mut">Text: "Your parcel is
+            held, pay Rs 25 fee" with a short link.</span></div>
+        <div class="card"><span class="tag">Phone</span><br><b>Vishing</b><br><span class="mut">Caller poses as bank/IT
+            support and asks for OTP or remote access.</span></div>
+        <div class="card"><span class="tag">QR code</span><br><b>Quishing</b><br><span class="mut">Malicious QR code on
+            a poster or email that leads to a fake login.</span></div>
+        <div class="card"><span class="tag">Web</span><br><b>Clone sites</b><br><span class="mut">Copy of a real login
+            page on a look-alike domain that captures what you type.</span></div>
+        <div class="card"><span class="tag">Social</span><br><b>Social media</b><br><span class="mut">Fake job offers,
+            giveaways, support accounts and "verify your page" DMs.</span></div>
+      </div>
+    </section>
+
+    <section id="spot">
+      <h2>3. Spot the phishing email (interactive)</h2>
+      <p class="mut">This is a made-up email from a fictional "MyBank". Click every suspicious part. <b
+          id="foundCount">0</b> / 6 found.</p>
+      <div class="email">
+        <div class="hd">
+          <b>From:</b> <span class="hot" data-i="0"
+            data-t="Sender domain mismatch: the display name says MyBank, but the real address comes from a random look-alike domain.">MyBank
+            Security &lt;alert@mybank-secure-verify.example&gt;</span><br>
+          <b>To:</b> undisclosed-recipients<br>
+          <b>Subject:</b> <span class="hot" data-i="1"
+            data-t="Urgency and fear: 'URGENT', 'suspended', 'within 24 hours'. Attackers want you to panic, not think.">URGENT:
+            Your account will be suspended within 24 hours!</span>
+        </div>
+        <div class="bd">
+          <span class="hot" data-i="2" data-t="Generic greeting: a real bank uses your name, not 'Dear Customer'.">Dear
+            Customer,</span><br><br>
+          We detected unusual activity. <span class="hot" data-i="3"
+            data-t="Requests sensitive data: banks never ask for password, PIN or OTP by email.">Confirm your password,
+            card number and OTP</span> to keep your account active.<br><br>
+          <span class="hot" data-i="4"
+            data-t="Link mismatch: hovering shows a different destination than the real bank. Never click, type the bank address yourself.">Click
+            here to verify now: https://mybank.com/verify</span><br><br>
+          Failure to act will result in permanent closure.<br><br>
+          Regards,<br>MyBank Team<br>
+          <span class="hot" data-i="5"
+            data-t="Unexpected attachment: unsolicited .zip/.html/.exe/.docm files are a classic malware delivery trick.">Attachment:
+            Account_Form.html.zip</span>
+        </div>
+      </div>
+      <div class="card" id="flagInfo">Click a highlighted part to see why it is a red flag.</div>
+    </section>
+
+    <section id="urls">
+      <h2>4. Fake websites and URLs</h2>
+      <p>The only part that matters is the <b>registered domain</b>, which is the text right before the first single
+        <code>/</code>, read from the right side of the name.</p>
+      <div class="card">
+        <div class="url">https://<b style="color:var(--ok)">mybank.com</b>/login <span class="mut">&nbsp;real
+            (fictional)</span></div>
+        <div class="url">https://mybank.<b style="color:var(--bad)">verify-login.example</b>/login <span
+            class="mut">&nbsp;fake: real domain is verify-login.example</span></div>
+        <div class="url">https://<b style="color:var(--bad)">rnybank.com</b>/login <span class="mut">&nbsp;fake: "rn"
+            looks like "m"</span></div>
+        <div class="url">https://mybank.com@<b style="color:var(--bad)">evil.example</b>/login <span
+            class="mut">&nbsp;fake: everything before @ is ignored</span></div>
+        <div class="url">https://mybank-support-<b style="color:var(--bad)">24x7.example</b> <span
+            class="mut">&nbsp;fake: extra words and odd extension</span></div>
+      </div>
+      <div class="card"><b>Website checklist</b>
+        <ul class="check">
+          <li>Check spelling and the exact domain, not just the padlock (criminals also get HTTPS certificates).</li>
+          <li>Don't follow links from messages: open the app or type the address yourself.</li>
+          <li>Be suspicious of pages that ask for card number + PIN + OTP all at once.</li>
+          <li>Hover (or long-press) on links to preview the destination. Use <b>URLScan.io</b> or <b>VirusTotal</b> to
+            check unknown links safely.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="social">
+      <h2>5. Social engineering: the psychology</h2>
+      <div class="grid">
+        <div class="card"><b>Urgency</b><br><span class="mut">"Act in 1 hour or lose access." Time pressure switches off
+            careful thinking.</span></div>
+        <div class="card"><b>Authority</b><br><span class="mut">Posing as the CEO, police, RBI, IT help desk. People
+            obey titles.</span></div>
+        <div class="card"><b>Fear</b><br><span class="mut">"Your account is hacked", "legal action will be
+            taken".</span></div>
+        <div class="card"><b>Greed / reward</b><br><span class="mut">Lottery wins, cashback, free gifts, easy
+            jobs.</span></div>
+        <div class="card"><b>Curiosity</b><br><span class="mut">"Is this you in the video?" or a USB stick left in the
+            parking lot.</span></div>
+        <div class="card"><b>Trust and helpfulness</b><br><span class="mut">"Hi, I'm new, can you help me with access?"
+            Kindness gets exploited.</span></div>
+      </div>
+      <div class="card"><b>Golden rule:</b> if a message makes you feel <i>rushed, scared or excited</i>, stop. That
+        feeling is the attack.</div>
+    </section>
+
+    <section id="cases">
+      <h2>6. Real-world examples</h2>
+      <div class="card"><span class="tag">2011</span> <b>RSA breach</b><br><span class="mut">Employees opened an email
+          titled "2011 Recruitment plan" with an Excel attachment. It installed malware that led to theft of data
+          related to RSA's SecurID products.</span></div>
+      <div class="card"><span class="tag">2013-2015</span> <b>Fake invoice fraud on tech giants</b><br><span
+          class="mut">A scammer sent fake invoices from a spoofed hardware vendor and tricked accounts-payable teams at
+          two large tech companies into paying over $100 million. Most of it was later recovered.</span></div>
+      <div class="card"><span class="tag">2016</span> <b>US election email compromise</b><br><span class="mut">A fake
+          "security alert" with a link to change a password led to the compromise of a campaign chairman's mailbox. One
+          click, huge consequences.</span></div>
+      <div class="card"><span class="tag">2020</span> <b>Twitter employee vishing</b><br><span class="mut">Attackers
+          phoned employees pretending to be internal IT, got access to admin tools and took over high-profile accounts
+          for a crypto scam.</span></div>
+      <p class="mut">Lesson: even tech-savvy organisations fall for it, so everyone needs the habit of verifying.</p>
+    </section>
+
+    <section id="tips">
+      <h2>7. Best practices</h2>
+      <div class="grid">
+        <div class="card"><b>Before you click</b>
+          <ul class="check">
+            <li>Check the real sender address.</li>
+            <li>Hover over links.</li>
+            <li>Ask: was I expecting this?</li>
+            <li>Never open unexpected attachments.</li>
+          </ul>
+        </div>
+        <div class="card"><b>Protect accounts</b>
+          <ul class="check">
+            <li>Enable MFA / authenticator app everywhere.</li>
+            <li>Use a password manager (it won't autofill on fake sites).</li>
+            <li>Unique password per site.</li>
+            <li>Never share OTPs, PINs or CVV.</li>
+          </ul>
+        </div>
+        <div class="card"><b>Verify</b>
+          <ul class="check">
+            <li>Call the official number from the website or card.</li>
+            <li>Confirm money requests on a second channel.</li>
+            <li>Navigate to sites yourself.</li>
+          </ul>
+        </div>
+        <div class="card"><b>If you clicked</b>
+          <ul class="check">
+            <li>Disconnect from the network if you opened a file.</li>
+            <li>Change the password and enable MFA.</li>
+            <li>Tell IT / your bank immediately.</li>
+            <li>India: report at cybercrime.gov.in or call 1930.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="quiz">
+      <h2>8. Test yourself</h2>
+      <div class="card">
+        <div class="bar"><i id="prog"></i></div>
+        <p class="mut" id="qnum"></p>
+        <h3 id="qtext"></h3>
+        <div id="opts"></div>
+        <div id="expl" class="mut"></div>
+        <button id="next" style="display:none">Next</button>
+        <div id="result" style="display:none"></div>
+      </div>
+    </section>
+
+  </main>
+  <footer>Created for the CodeAlpha Cyber Security Internship. All brands, domains and emails shown are fictional
+    examples for training.</footer>
+
+  <script>
+    // ---- Spot the email ----
+    const found = new Set();
+    document.querySelectorAll('.hot').forEach(el => el.addEventListener('click', () => {
+      el.classList.add('found'); found.add(el.dataset.i);
+      document.getElementById('flagInfo').innerHTML = '<b>Red flag:</b> ' + el.dataset.t;
+      document.getElementById('foundCount').textContent = found.size;
+      if (found.size === 6) document.getElementById('flagInfo').innerHTML += '<br><br><b style="color:var(--ok)">All 6 found. You would not have been fooled.</b>';
+    }));
+
+    // ---- Quiz ----
+    const Q = [
+      {
+        q: "You get an email from 'IT Support' asking you to reset your password using a link, within 1 hour. What do you do?",
+        o: ["Click quickly before the account locks", "Reply asking if it is real", "Open the company portal yourself or call IT on a known number", "Forward it to colleagues"], a: 2,
+        e: "Never use the link in the message. Verify through a channel you already trust."
+      },
+      {
+        q: "Which link is most likely safe for 'mybank.com'?",
+        o: ["https://mybank.com.secure-login.example", "https://mybank.com/login", "https://mybank.com@login-help.example", "https://rnybank.com/login"], a: 1,
+        e: "Only the second one has mybank.com as the real domain. The others hide a different domain or use look-alike letters."
+      },
+      {
+        q: "A caller says they are from your bank and asks for the OTP 'to cancel a fraudulent transaction'. You should:",
+        o: ["Share it, it's to protect you", "Share only the last 3 digits", "Hang up and call the number on your card", "Ask them to email you"], a: 2,
+        e: "Banks never ask for OTPs. An OTP is a key to your money and must never be shared."
+      },
+      {
+        q: "Which is a typical sign of phishing?",
+        o: ["Personalised greeting with your full name", "Urgent threat plus generic greeting", "Email from a colleague you were just talking to", "Newsletter you subscribed to"], a: 1,
+        e: "Urgency, threats and generic greetings are classic indicators."
+      },
+      {
+        q: "The padlock (HTTPS) is shown on a website. Does this prove it's legitimate?",
+        o: ["Yes, HTTPS means safe", "No, phishing sites can also use HTTPS", "Only if it's green", "Only on mobile"], a: 1,
+        e: "HTTPS only means the connection is encrypted, not that the owner is honest."
+      },
+      {
+        q: "Your 'CEO' emails from a Gmail address asking you to urgently buy gift cards and keep it secret. This is:",
+        o: ["A normal request", "Business Email Compromise (CEO fraud)", "A system error", "Spam from a newsletter"], a: 1,
+        e: "Secrecy + urgency + unusual payment method + free email address = CEO fraud."
+      },
+      {
+        q: "You accidentally clicked a suspicious link and entered your password. What first?",
+        o: ["Do nothing", "Delete the email", "Change the password, enable MFA and report it", "Restart the computer"], a: 2,
+        e: "Act fast: change the password from a safe device, turn on MFA, and report it so others are protected."
+      },
+      {
+        q: "Best tool to protect against reused-password damage?",
+        o: ["Same strong password everywhere", "Password manager with unique passwords + MFA", "Writing it on a sticky note", "Changing one letter each time"], a: 1,
+        e: "Unique passwords limit a leak to one site, and MFA blocks most stolen-password logins."
+      }
+    ];
+    let i = 0, score = 0, locked = false;
+    const $ = id => document.getElementById(id);
+    function show() {
+      locked = false; const q = Q[i];
+      $('qnum').textContent = `Question ${i + 1} of ${Q.length}`; $('prog').style.width = (i / Q.length * 100) + '%';
+      $('qtext').textContent = q.q; $('expl').textContent = ''; $('next').style.display = 'none';
+      $('opts').innerHTML = '';
+      q.o.forEach((t, k) => {
+        const b = document.createElement('button'); b.className = 'opt'; b.textContent = t;
+        b.onclick = () => pick(k, b); $('opts').appendChild(b);
+      });
+    }
+    function pick(k, btn) {
+      if (locked) return; locked = true;
+      const q = Q[i], all = $('opts').children;
+      all[q.a].classList.add('right'); if (k !== q.a) btn.classList.add('wrong'); else score++;
+      $('expl').textContent = (k === q.a ? 'Correct. ' : 'Not quite. ') + q.e;
+      $('next').style.display = 'inline-block'; $('next').textContent = i === Q.length - 1 ? 'See result' : 'Next';
+    }
+    $('next').onclick = () => {i++; if (i < Q.length) show(); else finish();};
+    function finish() {
+      $('prog').style.width = '100%';['qnum', 'qtext', 'opts', 'expl', 'next'].forEach(x => $(x).style.display = 'none');
+      const pct = Math.round(score / Q.length * 100);
+      const msg = pct >= 85 ? 'Phishing-proof! Share this with friends and family.' : pct >= 60 ? 'Good, but review the red flags again.' : 'Re-read the lessons and try again. Everyone starts somewhere.';
+      $('result').style.display = 'block';
+      $('result').innerHTML = `<h2>Score: ${score}/${Q.length} (${pct}%)</h2><p>${msg}</p><button onclick="location.reload()">Try again</button>`;
+    }
+    show();
+  </script>
+</body>
+
+</html>
